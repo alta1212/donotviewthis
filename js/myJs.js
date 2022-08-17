@@ -12,6 +12,8 @@ const textConfig = {
   text11:
     "Tối nay tớ qua đón cậu đi chơi nhaa :v Còn giờ thì chờ gì nữa mà ko inbox cho tớ đi nàooo",
   text12: "Okii lunn <3",
+  text13: "Mình biết mình đẹp try rồi đừng bấm nữa :vvv",
+
 };
 
 $(document).ready(function () {
@@ -88,21 +90,51 @@ $(document).ready(function () {
   // generate text in input
   function textGenerate() {
     var n = "";
-    var text = " " + textConfig.text9;
-    var a = Array.from(text);
+    var text =  textConfig.text9;
+  
     var textVal = $("#txtReason").val() ? $("#txtReason").val() : "";
-    var count = textVal.length;
-    if (count > 0) {
-      for (let i = 1; i <= count; i++) {
-        n = n + a[i];
-        if (i == text.length + 1) {
-          $("#txtReason").val("");
-          n = "";
-          break;
+    if(textVal.length==text.length)
+    {
+      Swal.fire({
+        title: textConfig.text13,
+        
+        width: 900,
+        padding: "3em",
+        
+        background: '#fff url("img/iput-bg.jpg")',
+        backdrop: `
+                      rgba(0,0,123,0.4)
+                      url("img/giphy2.gif")
+                      left top
+                      no-repeat
+                    `,
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonColor: "#fe8a71",
+        cancelButtonColor: "#f6cd61",
+        confirmButtonText: textConfig.text6,
+      }).then((result) => {
+        if (result.value) {
+          Swal.fire({
+            width: 900,
+            confirmButtonText: textConfig.text12,
+            background: '#fff url("img/iput-bg.jpg")',
+            title: textConfig.text10,
+            text: textConfig.text11,
+            confirmButtonColor: "#83d0c9",
+            onClose: () => {
+              window.location = "http://fb.com/mynametanh";
+            },
+          });
         }
-      }
+      });
+      
     }
-    $("#txtReason").val(n);
+    else if (textVal.length > 0) {
+      
+      $("#txtReason").val(text.substring(0,textVal.length));
+    }
   }
 
   // show popup
@@ -143,7 +175,7 @@ $(document).ready(function () {
         });
       }
     });
-
+    
     $("#txtReason").focus(function () {
       var handleWriteText = setInterval(function () {
         textGenerate();
@@ -151,6 +183,7 @@ $(document).ready(function () {
       $("#txtReason").blur(function () {
         clearInterval(handleWriteText);
       });
-    });
+  });
+
   });
 });
